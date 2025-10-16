@@ -1378,6 +1378,19 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_ShaHash(sha, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_ShaUpdate(sha, data, len)) != 0) {
                 WOLFSSL_MSG("ShaUpdate failed");
             }
@@ -1418,6 +1431,19 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha224 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha224->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha224Hash(sha224, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha224Update(sha224, data, len)) != 0) {
                 WOLFSSL_MSG("Sha224Update failed");
             }
@@ -1466,6 +1492,19 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha256 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha256->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha256Hash(sha256, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha256Update(sha256, data, len)) != 0) {
                 WOLFSSL_MSG("Sha256Update failed");
             }
@@ -1512,6 +1551,20 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha512 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha512->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha512Hash(sha512, data, len, hash,
+                                                 WC_SHA512_DIGEST_SIZE);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha512Update(sha512, data, len)) != 0) {
                 WOLFSSL_MSG("Sha512Update failed");
             }
@@ -1551,6 +1604,20 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("wc_InitSha512_224 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha512->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha512Hash(sha512, data, len, hash,
+                                                 WC_SHA512_224_DIGEST_SIZE);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha512_224Update(sha512, data, len)) != 0) {
                 WOLFSSL_MSG("wc_Sha512_224_Update failed");
             }
@@ -1593,6 +1660,20 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("wc_InitSha512_256 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha512->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha512Hash(sha512, data, len, hash,
+                                                 WC_SHA512_256_DIGEST_SIZE);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha512_256Update(sha512, data, len)) != 0) {
                 WOLFSSL_MSG("wc_Sha512_256_Update failed");
             }
@@ -1636,6 +1717,19 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha384 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha384->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                int ret = wc_CryptoCb_Sha384Hash(sha384, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha384Update(sha384, data, len)) != 0) {
                 WOLFSSL_MSG("Sha384Update failed");
             }
@@ -1677,6 +1771,18 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha3_224 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha3->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                ret = wc_CryptoCb_Sha3Hash(sha3, WC_HASH_TYPE_SHA3_224, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha3_224_Update(sha3, data, len)) != 0) {
                 WOLFSSL_MSG("Sha3_224_Update failed");
             }
@@ -1717,6 +1823,18 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha3_256 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha3->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                ret = wc_CryptoCb_Sha3Hash(sha3, WC_HASH_TYPE_SHA3_256, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha3_256_Update(sha3, data, len)) != 0) {
                 WOLFSSL_MSG("Sha3_256_Update failed");
             }
@@ -1757,6 +1875,18 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha3_384 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha3->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                ret = wc_CryptoCb_Sha3Hash(sha3, WC_HASH_TYPE_SHA3_384, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha3_384_Update(sha3, data, len)) != 0) {
                 WOLFSSL_MSG("Sha3_384_Update failed");
             }
@@ -1797,6 +1927,18 @@ int wc_HashGetFlags(wc_HashAlg* hash, enum wc_HashType type, word32* flags)
             WOLFSSL_MSG("InitSha3_512 failed");
         }
         else {
+#ifdef WOLF_CRYPTO_CB
+    #ifndef WOLF_CRYPTO_CB_FIND
+            if (sha3->devId != INVALID_DEVID)
+    #endif /* WOLF_CRYPTO_CB_FIND */
+            {
+                ret = wc_CryptoCb_Sha3Hash(sha3, WC_HASH_TYPE_SHA3_512, data, len, hash);
+                if (ret != WC_NO_ERR_TRACE(CRYPTOCB_UNAVAILABLE)) {
+                    return ret;
+                }
+                /* Fall-through if the callback is unavailable */
+            }
+#endif /* WOLF_CRYPTO_CB */
             if ((ret = wc_Sha3_512_Update(sha3, data, len)) != 0) {
                 WOLFSSL_MSG("Sha3_512_Update failed");
             }
